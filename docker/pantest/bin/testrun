@@ -2,8 +2,10 @@
 
 trid=$(uuidgen)
 trdir=reports/$trid
+
+[ -z "$radish_opts" ] && radish_opts=--junit-xml=$trdir/$trid.junit.xml
+
 mkdir -p $trdir
 echo *** starting testrun "$trid"
-echo *** running command "$*"
-$*
-# radish --cucumber-json=$trdir/$trid.json tests/basic/helloworld.feature
+echo *** running radish $radish_opts $FEATURES
+radish $radish_opts $FEATURES

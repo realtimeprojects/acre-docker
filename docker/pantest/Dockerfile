@@ -8,7 +8,7 @@ RUN apt-get update -y
 RUN apt-get install uuid-runtime
 RUN apt-get install -y python3 python3-pip
 
-RUN python3 -m pip install radish-bdd[bdd-xml]
+RUN python3 -m pip install radish-bdd[bdd-xml] junit.xml lxml
 
 COPY bin/* /usr/local/bin/
 

@@ -9,12 +9,12 @@ dockername=pantest-run
 image=pantest
 dockerrun=docker run -h $(dockername) $(dopts) -it $(image) 
 
-features=tests/basic/helloworld.feature
+FEATURES=tests/basic/helloworld.feature
 
-default: user-run
+default: userrun
 
-user-run: prepare
-	$(dockerrun) testrun radish $(features)
+userrun: prepare
+	$(dockerrun) bash -c "FEATURES=$(FEATURES) userrun"
 
 idock: prepare
 	$(dockerrun) idock
