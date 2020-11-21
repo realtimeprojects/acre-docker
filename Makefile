@@ -9,7 +9,7 @@ dockername=pantest-run
 image=pantest
 dockerrun=docker run -h $(dockername) $(dopts) -it $(image) 
 
-FEATURES=tests/basic/helloworld.feature
+FEATURES=tests/basic
 
 default: userrun
 
