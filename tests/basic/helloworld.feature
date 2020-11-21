@@ -1,4 +1,5 @@
 @regression
+@tid:9001
 Feature: Navigate to a public search provider
     In order to test web interfaces
     I need to be able to navigate to different
