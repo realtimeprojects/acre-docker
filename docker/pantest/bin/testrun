@@ -1,3 +1,9 @@
 #!/bin/bash
-radish tests/basic/helloworld.feature
 
+trid=$(uuidgen)
+trdir=reports/$trid
+mkdir -p $trdir
+echo *** starting testrun "$trid"
+echo *** running command "$*"
+$*
+# radish --cucumber-json=$trdir/$trid.json tests/basic/helloworld.feature

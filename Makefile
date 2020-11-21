@@ -1,23 +1,29 @@
 
 wd?=$(shell pwd)
 
-volume_mapping=-v $(wd)/tests:/pantest/tests -v $(wd)/steps:/pantest/radish
+volume_mapping=-v $(wd)/tests:/pantest/tests -v $(wd)/steps:/pantest/radish -v $(wd)/reports:/pantest/reports
 
 dopts=$(volume_mapping)
 
 dockername=pantest-run
 image=pantest
-dockerrun=docker run -h $(dockername) $(dopts)
+dockerrun=docker run -h $(dockername) $(dopts) -it $(image) 
 
-default: idock
+features=tests/basic/helloworld.feature
 
-testrun: pantest.image
-	$(dockerrun) -it $(image) testrun
+default: user-run
 
-idock: pantest.image
-	$(dockerrun) -it $(image) idock
+user-run: prepare
+	$(dockerrun) testrun radish $(features)
+
+idock: prepare
+	$(dockerrun) idock
 	
-run: $(image).image
+selftest: prepare
+	$(dockerrun) selftest
+
+prepare: $(image).image
+	mkdir -p reports/
 
 
 %.image: docker/%
