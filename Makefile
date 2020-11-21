@@ -1,17 +1,16 @@
 
 wd?=$(shell pwd)
 
-volume_mapping=-v $(wd):/data
+volume_mapping=-v $(wd)/docker/pantest:/pantest
 
 dopts=$(volume_mapping)
 
-dockername=Pleiades1
-dockerimage=pleiades
+dockername=pantest
+dockerimage=pantest
 dockerrun=docker run -h $(dockername) $(dopts)
 
 default: tests
 
-
 tests:
-	@docker build -t $(dockerimage) etc/docker/$(dockerimage)
-	$(dockerrun) -it $(dockerimage) bin/testagent
+	@docker build -t $(dockerimage) docker/$(dockerimage)
+	$(dockerrun) -it $(dockerimage)
