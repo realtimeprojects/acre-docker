@@ -8,13 +8,14 @@ dopts=$(volume_mapping)
 dockername=pantest-run
 image=pantest
 dockerrun=docker run -h $(dockername) $(dopts) -it $(image) 
+TAGS?=regression
 
 FEATURES=tests/basic
 
 default: userrun
 
 userrun: prepare
-	$(dockerrun) bash -c "FEATURES=$(FEATURES) userrun"
+	$(dockerrun) bash -c "FEATURES=$(FEATURES) TAGS=$(TAGS) userrun"
 
 idock: prepare
 	$(dockerrun) idock

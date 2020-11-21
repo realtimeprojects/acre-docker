@@ -3,15 +3,18 @@
 trid=$(uuidgen)
 trdir=reports/$trid
 
+[ -z "$TAGS" ] || tags="--tags $TAGS"
+
 default_radish_opts=\
 """
     --junit-xml=$trdir/$trid.junit.xml
     -m $trid
+    $tags
 """ 
 
 [ -z "$radish_opts" ] && radish_opts=$default_radish_opts
 
 mkdir -p $trdir
 echo *** starting testrun "$trid"
-echo *** running radish $radish_opts $FEATURES
+echo *** running radish $radish_opts $FEATURES $TAGS
 radish $radish_opts $FEATURES
