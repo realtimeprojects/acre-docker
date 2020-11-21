@@ -1,10 +1,9 @@
 
 wd?=$(shell pwd)
 
-volume_mapping=-v $(wd)/docker/pantest:/pantest
+volume_mapping=-v $(wd)/tests:/pantest/tests -v $(wd)/steps:/pantest/radish
 
-dopts=
-# $(volume_mapping)
+dopts=$(volume_mapping)
 
 dockername=pantest
 dockerimage=pantest
