@@ -1,5 +1,11 @@
 #!/bin/bash
 
+function startx
+{
+    [ -z "$pure" ] || return
+    xvfb start
+}
+
 trid=$(uuidgen)
 trdir=reports/$trid
 
@@ -17,4 +23,7 @@ default_radish_opts=\
 mkdir -p $trdir
 echo *** starting testrun "$trid"
 echo *** running radish $radish_opts $FEATURES $TAGS
+
+startx
+
 radish $radish_opts $FEATURES
