@@ -1,0 +1,3 @@
+#!/bin/bash
+radish tests/basic/helloworld.feature
+

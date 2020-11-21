@@ -8,8 +8,7 @@ RUN apt-get update -y
 RUN apt-get install -y python3 python3-pip
 RUN python3 -m pip install radish-bdd
 
-COPY bin/* /usr/local/bin
-RUN ls /
+COPY bin/* /usr/local/bin/
 
-ENTRYPOINT ["dockerrun"]
+CMD ["idock"]
 
