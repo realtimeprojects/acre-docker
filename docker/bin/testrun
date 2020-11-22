@@ -3,6 +3,7 @@
 [ -z "$DISPLAY" ] && export DISPLAY=:99.0
 
 service xvfb start
+logmon
 
 trid=$(uuidgen)
 trdir=reports/$trid
@@ -21,8 +22,6 @@ cmd="radish $radish_opts $FEATURES"
 echo *** starting testrun "$trid"
 echo *** running $cmd
 
-$cmd | tee $trlog
+touch $trlog
 xterm -bg black -fg white -display $DISPLAY -e "tail -f $trlog" &
-bash
-
-
+$cmd | tee $trlog

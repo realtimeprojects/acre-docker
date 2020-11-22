@@ -8,6 +8,7 @@ RUN apt-get update -y
 RUN apt-get install uuid-runtime
 RUN apt-get install -y python3 python3-pip
 RUN apt-get install -y x11vnc xvfb daemon
+RUN apt-get install -y rxvt dclock
 
 RUN python3 -m pip install radish-bdd[bdd-xml] junit.xml lxml
 
