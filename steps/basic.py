@@ -15,4 +15,4 @@ def i_expect_nothing(step):
 
 @when("I say '{message}'")
 def i_say(step, message):
-    pass
+    print("*** {}".format(message))
