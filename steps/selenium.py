@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import time
-
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
@@ -27,4 +25,3 @@ def i_navigate_to(step, url):
 def i_see_the_title(step, title):
     print("checking title %s" % title)
     world.asserts.contains(title, step.context.webdriver.title)
-    time.sleep(10)
