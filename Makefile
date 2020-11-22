@@ -30,5 +30,5 @@ prepare: $(image).image
 	mkdir -p reports/
 
 
-%.image: docker/%
-	@docker build -t $*  docker/$*
+pantest.image: docker/Dockerfile
+	@docker build -t pantest docker/

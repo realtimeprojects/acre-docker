@@ -1,0 +1,28 @@
+#!/bin/bash
+
+[ -z "$DISPLAY" ] && export DISPLAY=:99.0
+
+service xvfb start
+
+trid=$(uuidgen)
+trdir=reports/$trid
+trlog=$trdir/$trid.log
+
+[ -z "$TAGS" ] || tags="--tags $TAGS"
+
+# default_radish_opts="--junit-xml=$trdir/$trid.junit.xml -m $trid --syslog"
+default_radish_opts="--junit-xml=$trdir/$trid.junit.xml -m $trid"
+
+[ -z "$radish_opts" ] && radish_opts=$default_radish_opts
+
+mkdir -p $trdir
+cmd="radish $radish_opts $FEATURES"
+
+echo *** starting testrun "$trid"
+echo *** running $cmd
+
+$cmd | tee $trlog
+xterm -bg black -fg white -display $DISPLAY -e "tail -f $trlog" &
+bash
+
+
