@@ -13,7 +13,7 @@ image=pantest
 dockerrun=docker run -h $(dockername) $(dopts) -it $(image) 
 TAGS?=regression
 
-FEATURES?=tests/basic
+FEATURES?=tests/
 
 default: userrun
 
