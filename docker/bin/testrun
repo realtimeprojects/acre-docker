@@ -2,7 +2,7 @@
 
 [ -z "$DISPLAY" ] && export DISPLAY=:99.0
 
-service xvfb start
+sudo service xvfb start
 logmon
 
 trid=$(uuidgen)
@@ -25,3 +25,5 @@ echo *** running $cmd
 touch $trlog
 xterm -bg black -fg white -display $DISPLAY -e "tail -f $trlog" &
 $cmd | tee $trlog
+KEEP=1
+[ -z "$KEEP" ] || bash

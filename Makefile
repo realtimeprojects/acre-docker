@@ -1,7 +1,7 @@
 
 wd?=$(shell pwd)
 
-volume_mapping=-v $(wd)/tests:/pantest/tests -v $(wd)/steps:/pantest/radish -v $(wd)/reports:/pantest/reports
+volume_mapping=-v $(wd)/features:/pantest/features -v $(wd)/steps:/pantest/radish -v $(wd)/reports:/pantest/reports
 port_mapping=-p 9900:9900
 
 dopts=$(volume_mapping) \
@@ -13,7 +13,7 @@ image=pantest
 dockerrun=docker run -h $(dockername) $(dopts) -it $(image) 
 TAGS?=regression
 
-FEATURES?=tests/
+FEATURES?=features/
 
 default: userrun
 
