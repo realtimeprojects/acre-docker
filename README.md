@@ -25,12 +25,19 @@ A behavioral dockerized system-level application test environment.
 ## quickstart
 
   - clone me from github:
+
         git clone https://github.com/realtimeprojects/acre
+
   - clone acre-test project
+
         git clone https://github.com/realtimeprojects/acre-test
+
   - install acre:
+
         acre/bin/install
+
   - run existing acre-tests
+
         cd acre-test
         acre
 
