@@ -2,6 +2,8 @@
 
 A behavior driven dockerized system-level application test environment.
 
+See https://github.com/realtimeprojects/acre-test for test examples.
+
 # features
 
 - based on radish BDD
