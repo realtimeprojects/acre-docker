@@ -44,6 +44,7 @@ function do_stop
     [ -f $outdir/$outfile.srt ] || echo $outdir/$outfile.srt not found
     [ -f $outdir/$outfile.srt ] && \
         ffmpeg \
+            -loglevel quiet \
             -i $outdir/$outfile.mp4 \
             -i $outdir/$outfile.srt \
             -c:s mov_text \
@@ -57,7 +58,9 @@ function is_running
 
 case $1 in
     start)
+        is_running && { echo "$DAEMON already running"; exit 1; }
         do_start
+        sleep 5
         is_running || { echo "failed to start $DAEMON"; exit 1; }
         ;;
     stop)

@@ -87,6 +87,7 @@ class VideoRecorder:
 @before.each_step
 def subtitle_step(step):
     world.vr.subtitles.start("step: " + step.sentence)
+    time.sleep(0.5)
 
 
 @before.each_scenario
