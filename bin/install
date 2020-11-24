@@ -1,0 +1,13 @@
+#!/bin/bash
+ACRE_DIR=$(realpath $(dirname $(realpath $0))/..)
+
+echo in order to install acre,
+echo
+echo     - either create an alias to $ACRE_DIR/bin/acre:
+echo          alias acre=$ACRE_DIR/bin/acre
+echo
+echo    - or add $ACRE_DIR/bin to your PATH:
+echo          export PATH=\$PATH:$ACRE_DIR/bin
+echo
+echo    - or add an symbolic link to /usr/local/bin:
+echo          ln -siv $ACRE_DIR/bin/acre

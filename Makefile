@@ -1,7 +1,8 @@
 
 wd?=$(shell pwd)
+PP?=$(wd)
 
-volume_mapping=-v $(wd)/features:/acre/features -v $(wd)/steps:/acre/radish -v $(wd)/reports:/acre/reports
+volume_mapping=-v $(PP)/features:/acre/features -v $(wd)/steps:/acre/radish/acre -v $(PP)/steps:/acre/radish/project -v $(PP)/reports:/acre/reports
 port_mapping=-p 9900:9900
 
 dopts=$(volume_mapping) \
