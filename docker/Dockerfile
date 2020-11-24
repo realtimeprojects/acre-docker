@@ -2,7 +2,7 @@ FROM debian:latest
 
 USER root
 
-WORKDIR /pantest
+WORKDIR /acre
 
 RUN apt-get update -y
 RUN apt-get install uuid-runtime

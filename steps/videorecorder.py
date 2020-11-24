@@ -49,7 +49,7 @@ class SubTitles:
                 '\n',
                 '{}\n'.format(self.index),
                 "{} --> {}\n".format(start, stop),
-                '{}\n'.format(self.text)])
+                '<b>{}</b>\n<i>{}</i>\n{}\n'.format(_blue(world.vr.feature), world.vr.scenario, self.text)])
             srtfile.close()
 
 
@@ -92,7 +92,8 @@ def subtitle_step(step):
 
 @before.each_scenario
 def subtitle_scenario(scenario):
-    world.vr.subtitles.start("scenario: " + scenario.sentence)
+    world.vr.scenario = scenario.sentence
+    world.vr.subtitles.start("scenario started")
     time.sleep(1)
 
 
@@ -113,6 +114,7 @@ def start_videorecording(feature):
     print("start video recording for '%s'" % fn)
     world.vr = VideoRecorder(fn)
     world.vr.start()
+    world.vr.feature = fn
     world.vr.subtitles.start("feature: " + _feature2name(feature))
 
 
@@ -140,3 +142,16 @@ def _formatdelta(timedelta):
         timedelta.seconds % 3600 // 60,
         timedelta.seconds % 3600 % 60,
         timedelta.microseconds // 1000)
+
+
+def _colorize(color, text):
+    # return '<font color={}>x{}</font>'.format(color, text)
+    return text
+
+
+def _orange(text):
+    return _colorize("#999922", text)
+
+
+def _blue(text):
+    return _colorize("#2222ee", text)
