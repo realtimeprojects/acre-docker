@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+import time
 
 from subprocess import call
 
@@ -21,13 +22,20 @@ class SubTitles:
     def start(self, text):
         print("subtitles start {}/{}".format(self.name, text))
 
-        if self.text:
-            self._write(
-                self.started,
-                datetime.now() - self.startofvideo)
+        if self.started:
+            self._writenow()
 
         self.text = text
         self.started = datetime.now() - self.startofvideo
+
+    def stop(self):
+        self._writenow()
+        self.started = False
+
+    def _writenow(self):
+        self._write(
+            self.started,
+            datetime.now() - self.startofvideo)
 
     def _write(self, start, stop):
         self.index += 1
@@ -62,7 +70,7 @@ class VideoRecorder:
               os.environ["DISPLAY"],
               world.config.user_data['reportsdir'],
               # 'reports/',
-              "%s-video.mp4" % self.name])
+              "%s.mp4" % self.name])
         self.started = datetime.now()
         self.subtitles.startofvideo = self.started
 
@@ -73,12 +81,24 @@ class VideoRecorder:
               "stop",
               os.environ["DISPLAY"],
               world.config.user_data['reportsdir'],
-              "%s-video.mp4" % self.name])
+              "%s.mp4" % self.name])
 
 
 @before.each_step
 def subtitle_step(step):
-    world.vr.subtitles.start(step.sentence)
+    world.vr.subtitles.start("step: " + step.sentence)
+
+
+@before.each_scenario
+def subtitle_scenario(scenario):
+    world.vr.subtitles.start("scenario: " + scenario.sentence)
+    time.sleep(1)
+
+
+@after.each_scenario
+def subtitle_scenario_result(scenario):
+    world.vr.subtitles.start("{} scenario: {}".format(scenario.state, scenario.sentence))
+    time.sleep(1)
 
 
 @before.each_feature
@@ -92,7 +112,7 @@ def start_videorecording(feature):
     print("start video recording for '%s'" % fn)
     world.vr = VideoRecorder(fn)
     world.vr.start()
-    world.vr.subtitles.start(_feature2name(feature))
+    world.vr.subtitles.start("feature: " + _feature2name(feature))
 
 
 @after.each_feature
@@ -101,6 +121,9 @@ def stop_videorecording(feature):
     print("*** stop video recording for '%s'" % fn)
     if not world.vr or not world.vr.started:
         return
+    world.vr.subtitles.start("{} feature: {}".format(feature.state, fn))
+    time.sleep(1)
+    world.vr.subtitles.stop()
     world.vr.stop()
 
 
