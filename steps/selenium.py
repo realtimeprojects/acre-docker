@@ -12,7 +12,7 @@ def i_start_the_browser(step):
     desired = DesiredCapabilities.CHROME
     step.context.webdriver = webdriver.Chrome(
             desired_capabilities=desired,
-            chrome_options=world.chrome_options())
+            options=world.chrome_options())
 
 
 @when("I navigate to '{url}'")
