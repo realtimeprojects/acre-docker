@@ -12,6 +12,7 @@ Watch the [sample video](https://github.com/realtimeprojects/acre/wiki/navigatio
 - run your BDD test in a docker container
 - record videos from testruns
 - create validation-ready test reports in zero time
+- monitor live run with vnc or screen sharing
 
 - supports selenium testing with chrome browser
 
