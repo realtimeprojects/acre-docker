@@ -65,13 +65,13 @@ class VideoRecorder:
             return
         print("starting video recording for %s to %s"
               % (self.name, world.config.user_data['reportsdir']))
+        self.started = datetime.now()
         call([CMD,
               "start",
               os.environ["DISPLAY"],
               world.config.user_data['reportsdir'],
               # 'reports/',
               self.name])
-        self.started = datetime.now()
         self.subtitles.startofvideo = self.started
 
     def stop(self):
