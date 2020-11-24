@@ -1,6 +1,6 @@
 # acre
 
-A behavioral driven dockerized system-level application test environment.
+A behavior driven dockerized system-level application test environment.
 
 # features
 
