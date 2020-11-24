@@ -24,12 +24,13 @@ VID="videorecording${PORT//[\:\.]/}"
 
 cmd="ffmpeg -y -f x11grab -video_size $screensize -i $PORT -pix_fmt yuv420p -codec:v libx264 -r 10 -crf 38 -preset ultrafast $outdir/$outfile"
 echo writing logs to $outdir
-DAEMON="daemon --name=$VID --output $outdir/${outfile//mp4/log} --pidfiles=$outdir"
+DAEMON="daemon --name=$VID --pidfiles=/tmp"
 
 function do_start
 {
 #    echo starting video recording $PORT $outdir $outfile $screensize
-    $DAEMON -- $cmd
+    echo starting $DAEMON
+    $DAEMON --output $outdir/${outfile//mp4/log} -- $cmd
     echo cmd $cmd started
 }
 
@@ -48,9 +49,10 @@ function is_running
 case $1 in
     start)
         do_start
+        is_running || { echo "failed to start $DAEMON"; exit 1; }
         ;;
     stop)
-        is_running && { echo "daemon not running"; exit 0; }
+        is_running || { echo "daemon not running"; exit 0; }
         do_stop
         sleep 1
         is_running || exit 0

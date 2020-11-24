@@ -1,4 +1,4 @@
-import time
+from datetime import datetime
 import os
 
 from subprocess import call
@@ -15,6 +15,7 @@ class SubTitles:
         self.name = name
         self.text = None
         self.started = False
+        self.startofvideo = False
         self.index = 0
 
     def start(self, text):
@@ -23,13 +24,15 @@ class SubTitles:
         if self.text:
             self._write(
                 self.started,
-                time.time() - self.started)
+                datetime.now() - self.startofvideo)
 
         self.text = text
-        self.started = time.time() - self.started
+        self.started = datetime.now() - self.startofvideo
 
     def _write(self, start, stop):
         self.index += 1
+        start = _formatdelta(start)
+        stop = _formatdelta(stop)
 
         fn = os.path.join(world.config.user_data['reportsdir'], "{}.srt".format(self.name))
         print("updating srt file {}".format(fn))
@@ -54,13 +57,14 @@ class VideoRecorder:
             return
         print("starting video recording for %s to %s"
               % (self.name, world.config.user_data['reportsdir']))
-        self.started = time.time()
         call([CMD,
               "start",
               os.environ["DISPLAY"],
               world.config.user_data['reportsdir'],
               # 'reports/',
               "%s-video.mp4" % self.name])
+        self.started = datetime.now()
+        self.subtitles.startofvideo = self.started
 
     def stop(self):
         print("stopping video recording for %s" % self.name)
@@ -68,7 +72,8 @@ class VideoRecorder:
         call([CMD,
               "stop",
               os.environ["DISPLAY"],
-              world.config.user_data['reportsdir']])
+              world.config.user_data['reportsdir'],
+              "%s-video.mp4" % self.name])
 
 
 @before.each_step
@@ -101,3 +106,13 @@ def stop_videorecording(feature):
 
 def _feature2name(feature):
     return os.path.basename(feature.path)
+
+
+def _formatdelta(timedelta):
+    # return timedelta.strftime("%H:%M:%S,%fff")
+    TFT = "%02d:%02d:%02d,%03d"
+    return TFT % (
+        timedelta.seconds // 3600,
+        timedelta.seconds % 3600 // 60,
+        timedelta.seconds % 3600 % 60,
+        timedelta.microseconds // 1000)
