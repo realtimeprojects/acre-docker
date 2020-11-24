@@ -70,7 +70,7 @@ class VideoRecorder:
               os.environ["DISPLAY"],
               world.config.user_data['reportsdir'],
               # 'reports/',
-              "%s.mp4" % self.name])
+              self.name])
         self.started = datetime.now()
         self.subtitles.startofvideo = self.started
 
@@ -81,7 +81,7 @@ class VideoRecorder:
               "stop",
               os.environ["DISPLAY"],
               world.config.user_data['reportsdir'],
-              "%s.mp4" % self.name])
+              self.name])
 
 
 @before.each_step
