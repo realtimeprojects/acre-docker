@@ -20,8 +20,6 @@ class SubTitles:
         self.index = 0
 
     def start(self, text):
-        print("subtitles start {}/{}".format(self.name, text))
-
         if self.started:
             self._writenow()
 
@@ -43,7 +41,6 @@ class SubTitles:
         stop = _formatdelta(stop)
 
         fn = os.path.join(world.config.user_data['reportsdir'], "{}.srt".format(self.name))
-        print("updating srt file {}".format(fn))
         with open(fn, "a") as srtfile:
             srtfile.writelines([
                 '\n',
