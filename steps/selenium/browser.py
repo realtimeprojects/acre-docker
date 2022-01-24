@@ -22,11 +22,11 @@ def i_close_the_browser(step):
 
 @when("I navigate to '{url}'")
 def i_navigate_to(step, url):
-    print("opening url '{}'".format(url))
+    print(f"opening url '{url}'")
     world.webdriver.get(url)
 
 
 @then("I see '{title}' in the page title")
 def i_see_the_title(step, title):
-    print("checking title %s" % title)
+    print(f"checking title {title}")
     world.asserts.contains(title, world.webdriver.title)
