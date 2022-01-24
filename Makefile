@@ -12,7 +12,7 @@ dopts=$(volume_mapping) \
 
 dockername=acre-run
 image=acre
-dockerrun=docker run -h $(dockername) $(dopts) -it $(image) 
+dockerrun=docker run -e TERM -h $(dockername) $(dopts) -it $(image) 
 TAGS?=regression
 
 FEATURES?=features/
