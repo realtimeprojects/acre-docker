@@ -22,7 +22,7 @@ default_radish_opts=" \
 [ -z "$radish_opts" ] && radish_opts=$default_radish_opts
 
 mkdir -p $trdir
-cmd="radish $radish_opts $FEATURES"
+cmd="radish $radish_opts $FEATURES $TAGS"
 
 echo *** starting testrun "$trid"
 echo *** running $cmd

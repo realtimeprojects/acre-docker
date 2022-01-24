@@ -19,7 +19,7 @@ FEATURES?=features/
 default: userrun
 
 userrun: prepare
-	$(dockerrun) bash -c "FEATURES=$(FEATURES) TAGS=$(TAGS) userrun"
+	$(dockerrun) bash -c "FEATURES=$(FEATURES) TAGS='--tags $(TAGS)' userrun"
 
 idock: prepare
 	$(dockerrun) idock
