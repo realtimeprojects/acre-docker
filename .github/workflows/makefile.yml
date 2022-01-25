@@ -7,29 +7,6 @@ on:
     branches: [ master, branches/query ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        path: acre-test
-    
-    - name: configure
-      uses: actions/checkout@v2
-      with:
-        repository: realtimeprojects/acre
-        path: acre
-        ref: master
-
-    - name: Run check
-      run: cd acre-test && ../acre/bin/acre
-      
-    - name: Run distcheck
-      run: make distcheck
-
-
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
