@@ -5,9 +5,9 @@
 sudo service xvfb start
 logmon
 
-trid=$(uuidgen)
-trdir=reports/$trid
-trlog=$trdir/$trid.log
+export trid=$(uuidgen)
+export trdir=reports/$trid
+export trlog=$trdir/$trid.log
 
 [ -z "$TAGS" ] || tags="--tags $TAGS"
 
@@ -27,6 +27,6 @@ echo --- starting testrun "$trid"
 echo --- running $cmd
 
 touch $trlog
-xterm -bg black -fg white -display $DISPLAY -e "tail -f $trlog" &
-PYTHONPATH=./lib:project/lib radish $radish_opts $FEATURES $TAGS
+rxvt -bg black -fg white -geometry 80x10+0+500 -display $DISPLAY -e "tail -f $trlog" &
+PYTHONPATH=./lib:project/lib radish $radish_opts $FEATURES $TAGS | tee $trlog
 [ -z "$KEEP" ] || bash
