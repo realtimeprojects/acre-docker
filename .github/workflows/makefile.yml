@@ -22,7 +22,7 @@ jobs:
         run:  make acre.image
 
       - name: Log in to Docker Hub
-        run: docker login ghcr.io -U ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+        run: docker login ghcr.io -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
       
       - name: Push docker image
         run:  docker push ghcr.io/realtimeprojects/acre:latest
