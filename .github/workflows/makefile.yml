@@ -2,9 +2,9 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ master, branches/query ]
+    branches: [ branches/docker ]
   pull_request:
-    branches: [ master, branches/query ]
+    branches: [ branches/docker ]
 
 env:
   REGISTRY: ghcr.io
