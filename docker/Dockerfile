@@ -16,6 +16,10 @@ COPY bin/* /usr/local/bin/
 COPY etc/init.d/xvfb /etc/init.d/
 RUN mkdir -p /tmp/installer
 COPY installer/* /tmp/installer/
+RUN mkdir -p /tmp/acre
+COPY lib/* /tmp/acre/lib
+COPY steps/* /tmp/acre/steps
+COPY etc/* /tmp/acre/etc
 
 RUN /tmp/installer/tester-user.sh
 
