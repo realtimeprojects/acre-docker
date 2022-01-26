@@ -19,8 +19,9 @@ jobs:
         uses: actions/checkout@v2
       
       - name: build docker image
-        run:  make acre.image
-        run:  docker tag acre ghcr.io/realtimeprojects/acre:latest
+        run:  |
+          make acre.image
+          docker tag acre ghcr.io/realtimeprojects/acre:latest
 
       - name: Log in to Docker Hub
         run: docker login ghcr.io -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
