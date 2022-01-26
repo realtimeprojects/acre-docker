@@ -20,10 +20,11 @@ jobs:
       
       - name: build docker image
         run:  make acre.image
+              docker tag acre ghcr.io/realtimeprojects/acre:latest
 
       - name: Log in to Docker Hub
         run: docker login ghcr.io -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
       
       - name: Push docker image
-        run:  docker push acre:latest
+        run:  docker push ghcr.io/realtimeprojects/acre:latest
 
