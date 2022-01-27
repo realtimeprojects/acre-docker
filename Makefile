@@ -2,7 +2,7 @@
 wd?=$(shell pwd)
 PP?=$(wd)
 
-volume_mapping=-v $(PP)/features:/acre/features -v $(wd)/steps:/acre/radish/acre -v $(PP)/steps:/acre/radish/project -v $(PP)/reports:/acre/reports -v $(PP)/lib:/acre/radish/project/lib -v $(wd)/lib:/acre/lib
+volume_mapping=-v $(PP)/features:/acre/features -v $(PP)/etc:/acre/etc -v $(wd)/steps:/acre/acre-steps -v $(PP)/steps:/acre/project-steps -v $(PP)/reports:/acre/reports -v $(PP)/lib:/acre/project-lib -v $(wd)/lib:/acre/acre-lib
 
 port_mapping=-p 9900:9900
 
@@ -12,7 +12,7 @@ dopts=$(volume_mapping) \
 
 dockername=acre-run
 image=acre
-dockerrun=docker run -e TERM -h $(dockername) $(dopts) $(image) 
+dockerrun=docker run -e TERM -it -h $(dockername) $(dopts) $(image) 
 TAGS?=regression
 
 FEATURES?=features/

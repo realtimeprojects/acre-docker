@@ -16,7 +16,9 @@ default_radish_opts=" \
     --junit-xml=$trdir/$trid.junit.xml \
     -m $trid \
     --no-ansi \
-    --user-data=reportsdir=$trdir
+    --user-data=reportsdir=$trdir \
+    -b acre-steps \
+    -b project-steps \
     "
 
 [ -z "$radish_opts" ] && radish_opts=$default_radish_opts
@@ -28,5 +30,12 @@ echo --- running $cmd
 
 touch $trlog
 rxvt -bg black -fg white -geometry 80x10+0+500 -display $DISPLAY -e "tail -f $trlog" &
-PYTHONPATH=./lib:project/lib radish $radish_opts $FEATURES $TAGS | tee $trlog
+[ -f "etc/user.data" ] && { echo loading user data...; export USERDATA=$(cat etc/user.data); }
+export udopts=""
+for line in $(cat etc/user.data); do
+    export udopts="$udopts --user-data $line";
+done;
+echo USERDATA: $USERDATA, useropts: $udopts
+echo CMD: PYTHONPATH=./acre-lib:./project-lib radish $radish_opts $FEATURES $TAGS | tee $trlog
+PYTHONPATH=./acre-lib:./project-lib radish $radish_opts $udopts $FEATURES $TAGS | tee $trlog
 [ -z "$KEEP" ] || bash
