@@ -36,6 +36,6 @@ for line in $(cat etc/user.data); do
     export udopts="$udopts --user-data $line";
 done;
 echo USERDATA: $USERDATA, useropts: $udopts
-echo CMD: PYTHONPATH=./acre-lib:./project-lib radish $radish_opts $FEATURES $TAGS | tee $trlog
+echo "CMD: PYTHONPATH=./acre-lib:./project-lib radish $radish_opts $FEATURES $TAGS | tee $trlog"
 PYTHONPATH=./acre-lib:./project-lib radish $radish_opts $udopts $FEATURES $TAGS | tee $trlog
 [ -z "$KEEP" ] || bash
