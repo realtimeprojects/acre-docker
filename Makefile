@@ -12,7 +12,7 @@ dopts=$(volume_mapping) \
 
 dockername=acre-run
 image=acre
-dockerrun=docker run -e TERM -it -h $(dockername) $(dopts) $(image) 
+dockerrun=docker run -e TERM -e USERDATA_FILE -it -h $(dockername) $(dopts) $(image) 
 TAGS?=regression
 
 FEATURES?=features/
@@ -20,7 +20,7 @@ FEATURES?=features/
 default: userrun
 
 userrun: prepare
-	$(dockerrun) bash -c "FEATURES=$(FEATURES) TAGS='--tags $(TAGS)' userrun"
+	$(dockerrun) bash -c "USERDATA_FILE=$(USERDATA_FILE) FEATURES=$(FEATURES) TAGS='--tags $(TAGS)' userrun"
 
 idock: prepare
 	$(dockerrun) idock

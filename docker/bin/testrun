@@ -30,9 +30,10 @@ echo --- running $cmd
 
 touch $trlog
 rxvt -bg black -fg white -geometry 80x10+0+500 -display $DISPLAY -e "tail -f $trlog" &
-[ -f "etc/user.data" ] && { echo loading user data...; export USERDATA=$(cat etc/user.data); }
+[ -z "$USERDATA_FILE" ] && export USERDATA_FILE='etc/user.data'
+[ -f $USERDATA_FILE ] && { echo loading user data...; }
 export udopts=""
-for line in $(cat etc/user.data); do
+for line in $(cat USERDATA_FILE); do
     export udopts="$udopts --user-data $line";
 done;
 echo USERDATA: $USERDATA, useropts: $udopts
