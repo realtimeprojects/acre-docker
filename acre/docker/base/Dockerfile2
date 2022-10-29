@@ -1,0 +1,13 @@
+from acre-base1
+COPY etc/requirements.txt /usr/local/etc/
+RUN python3 -m pip install -r /usr/local/etc/requirements.txt
+
+RUN mkdir -p /tmp/installer
+COPY installer/* /tmp/installer/
+
+RUN /tmp/installer/tester-user.sh
+
+USER tester
+
+CMD ["idock"]
+
