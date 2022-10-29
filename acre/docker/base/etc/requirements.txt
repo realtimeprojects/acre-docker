@@ -2,5 +2,6 @@ radish-bdd[bdd-xml]
 junit.xml
 lxml
 selenium
-git+https://github.com/realtimeprojects/acre-cli.git#v0.0.3a3
+git+https://github.com/realtimeprojects/acre-cli.git
+git+https://github.com/realtimeprojects/acre-lib.git
 
