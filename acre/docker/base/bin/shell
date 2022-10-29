@@ -1,0 +1,9 @@
+#!/bin/bash
+
+[ -z "$DISPLAY" ] && export DISPLAY=:99.0
+
+sudo service xvfb start
+logmon testrun.log
+
+echo running: $*
+[ -z "$*" ] && bash || bash -c "$*"
