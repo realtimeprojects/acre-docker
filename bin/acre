@@ -1,6 +1,0 @@
-#!/bin/bash
-ACRE_DIR=$(realpath $(dirname $(realpath $0))/..)
-PP=$(pwd)
-
-cd $ACRE_DIR && make PP=$PP $*
-

@@ -1,0 +1,102 @@
+#!/bin/bash
+# /etc/init.d/xvfb
+# debian-compatible hudson startup script.
+#
+### BEGIN INIT INFO
+# Provides:          xvfb
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start xvfb at boot time
+# Description:       Provides a virtual screen for automtated testing with cromedriver
+### END INIT INFO
+
+PORT=:22
+screensize=1280x1024
+[ -z "$2" ] || PORT=$2
+outdir=$(pwd)
+[ -z "$3" ] || outdir=$(realpath $3)
+outfile=testrun.mp4
+[ -z "$4" ] || outfile=$4
+[ -z "$5" ] || screensize=$5
+VID="videorecording${PORT//[\:\.]/}"
+
+cmd="ffmpeg -y -f x11grab -video_size $screensize -i $PORT -pix_fmt yuv420p -codec:v libx264 -r 10 -crf 38 -preset ultrafast $outdir/$outfile.mp4"
+echo writing logs to $outdir
+DAEMON="daemon --name=$VID --pidfiles=/tmp"
+
+function do_start
+{
+#    echo starting video recording $PORT $outdir $outfile $screensize
+    echo starting $DAEMON
+    $DAEMON --output $outdir/$outfile.log -- $cmd
+    echo cmd $cmd started
+}
+
+function do_stop
+{
+#        echo stopping video recording $PORT
+    echo STOPPING $DAEMON
+    $DAEMON --stop
+
+    [ -f $outdir/$outfile.srt ] && echo found $outdir/$outfile.srt
+    [ -f $outdir/$outfile.srt ] || echo $outdir/$outfile.srt not found
+    [ -f $outdir/$outfile.srt ] && \
+        ffmpeg \
+            -loglevel quiet \
+            -i $outdir/$outfile.mp4 \
+            -i $outdir/$outfile.srt \
+            -c:s mov_text \
+            $outdir/$outfile.subtitles.mp4 
+}
+
+function is_running
+{
+    $DAEMON --running
+}
+
+case $1 in
+    start)
+        is_running && { echo "$DAEMON already running"; exit 1; }
+        do_start
+        sleep 5
+        is_running || { echo "failed to start $DAEMON"; exit 1; }
+        ;;
+    stop)
+        is_running || { echo "daemon not running"; exit 0; }
+        do_stop
+        sleep 1
+        is_running || exit 0
+        sleep 5
+        is_running || exit 0
+        is_running && echo "still running, doing another stop"; do_stop
+        sleep 10
+        is_running || exit 0
+        is_running && echo "still running, doing another stop"; do_stop
+        sleep 10
+        is_running || exit 0
+        is_running && echo "still running, doing another stop"; do_stop
+        sleep 20
+        is_running || exit 0
+        is_running && echo "still running, doing another stop"; do_stop
+        sleep 30
+        is_running || exit 0
+        is_running && echo "still running, killing"; killall ffmpeg
+        ;;
+    restart)
+        is_running && do_stop
+        do_start
+        ;;
+    abort)
+        is_running && do_stop
+        rm $outdir/$outfile.mp4
+        ;;
+    status)
+        is_running && echo "videorecording on $PORT is running"
+        is_running || echo "videorecording on $PORT is NOT running"
+        ;;
+    *)
+        echo unknown command
+        ;;
+esac

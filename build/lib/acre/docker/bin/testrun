@@ -1,0 +1,42 @@
+#!/bin/bash
+
+[ -z "$DISPLAY" ] && export DISPLAY=:99.0
+
+sudo service xvfb start
+logmon
+
+export trid=$(uuidgen)
+export trdir=reports/$trid
+export trlog=$trdir/$trid.log
+
+[ -z "$TAGS" ] || tags="--tags $TAGS"
+
+# default_radish_opts="--junit-xml=$trdir/$trid.junit.xml -m $trid --syslog"
+default_radish_opts=" \
+    --junit-xml=$trdir/$trid.junit.xml \
+    -m $trid \
+    --no-ansi \
+    --user-data=reportsdir=$trdir \
+    -b acre-steps \
+    -b project-steps \
+    "
+
+[ -z "$radish_opts" ] && radish_opts=$default_radish_opts
+
+mkdir -p $trdir
+
+echo --- starting testrun "$trid"
+echo --- running $cmd
+
+touch $trlog
+rxvt -bg black -fg white -geometry 80x10+0+500 -display $DISPLAY -e "tail -f $trlog" &
+[ -z "$USERDATA_FILE" ] && export USERDATA_FILE='etc/user.data'
+[ -f $USERDATA_FILE ] && { echo loading user data...; }
+export udopts=""
+for line in $(cat USERDATA_FILE); do
+    export udopts="$udopts --user-data $line";
+done;
+echo USERDATA: $USERDATA, useropts: $udopts
+echo "CMD: PYTHONPATH=./acre-lib:./project-lib radish $radish_opts $FEATURES $TAGS | tee $trlog"
+PYTHONPATH=./acre-lib:./project-lib radish $radish_opts $udopts $FEATURES $TAGS | tee $trlog
+[ -z "$KEEP" ] || bash

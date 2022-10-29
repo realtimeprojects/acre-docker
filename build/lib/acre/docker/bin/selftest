@@ -1,0 +1,10 @@
+#!/bin/bash
+## run basic radish test
+testrun radish tests/basic/helloworld.feature
+
+# use cucumber json reports
+testrun 'radish --cucumber-json=$trdir/$trid.json tests/basic/helloworld.feature'
+
+# run radish test using bdd-xml report generation
+testrun 'radish --bdd-xml=$trdir/$trid.xml tests/basic/helloworld.feature'
+
