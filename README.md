@@ -24,26 +24,25 @@ Watch the [sample video](https://github.com/realtimeprojects/acre/wiki/navigatio
 
 ## prerequisites
 
-  - gnu make installed
   - docker installed
-  - linux or macos plattform
+  - linux or macos platform
 
 ## quickstart
 
-  - clone me from github:
+  - install acre-cli
 
-        git clone https://github.com/realtimeprojects/acre
+        pip3 install --upgrade https://github.com/realtimeprojects/acre-cli
 
   - clone acre-test project
 
         git clone https://github.com/realtimeprojects/acre-test
 
-  - install acre:
+  - initialise acre
 
-        acre/bin/install
+        acre init
 
   - run existing acre-tests
 
         cd acre-test
-        acre
+        acre features/*
 
