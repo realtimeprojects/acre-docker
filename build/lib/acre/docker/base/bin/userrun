@@ -1,4 +1,0 @@
-#!/bin/bash
-## run basic radish test
-echo $USERDATA_FILE
-testrun $FEATURES $TAGS
