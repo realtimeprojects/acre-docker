@@ -1,9 +1,11 @@
 #!/bin/bash
 
-[ -z "$DISPLAY" ] && export DISPLAY=:99.0
+echo "export DISPLAY=:99.0" >>~/.bashrc
+export DISPLAY=:99.0
 
 sudo service xvfb start
 logmon testrun.log
+tail -f /var/log/lastlog
 
 echo running: $*
 [ -z "$*" ] && bash || bash -c "$*"
