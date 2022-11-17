@@ -2,7 +2,7 @@
 
 A behavior driven dockerized system-level application test environment.
 
-See https://github.com/realtimeprojects/acre-test for test examples.
+See https://github.com/acre-bdd/acre-test for test examples.
 
 Watch the [sample video](https://github.com/realtimeprojects/acre/wiki/navigation.feature.subtitles.mp4) of a automated test recording.
 
@@ -31,11 +31,11 @@ Watch the [sample video](https://github.com/realtimeprojects/acre/wiki/navigatio
 
   - install acre-cli
 
-        pip3 install --upgrade https://github.com/realtimeprojects/acre-cli
+        pip3 install --upgrade https://github.com/acre-bdd/acre-cli
 
   - clone acre-test project
 
-        git clone https://github.com/realtimeprojects/acre-test
+        git clone https://github.com/acre-bdd/acre-test
 
   - initialise acre
 
